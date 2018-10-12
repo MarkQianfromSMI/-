@@ -1,0 +1,94 @@
+#include<iostream>
+using namespace std;
+
+struct ListNode
+{
+	int data;
+	struct ListNode * next;
+	ListNode(int x = 0 , ListNode* next = NULL) :data(x), next(next)//形参初始化后，在实例化该结构体时，调用该构造函数，
+                                                                  //不管给不给实参，都不会报错，因为实参是从左向右覆盖,
+	{}                                                              //ListNode(n)，ListNode(),ListNode均OK
+};
+
+void AddToTail(ListNode* &head, int value)
+{
+	ListNode * pNew = new ListNode;
+	pNew->data = value;
+	pNew->next = nullptr;
+
+	if (head == NULL)
+	{
+		head = pNew;
+	}
+	else
+	{
+		ListNode *p = head;
+		while (p->next != NULL)
+		{
+			p = p->next;
+		}
+		p->next = pNew;
+	}
+}
+
+
+ListNode* ReverseList(ListNode* pHead) {
+	ListNode* pReservedHead = nullptr;
+	ListNode* Node = pHead;
+	ListNode* Pre = nullptr;
+	if (pHead == NULL)
+		return nullptr;
+	if (pHead->next == NULL)
+		pReservedHead = pHead;
+	if (pHead->next != NULL)
+	while (Node != nullptr)
+	{
+		ListNode* Next = Node->next;
+		if (Next == nullptr)
+			pReservedHead = Node;
+		Node->next = Pre;
+		Pre = Node;
+		Node = Next;
+	}
+	return pReservedHead;
+
+}
+
+int main()
+{
+	int n = 5;
+	ListNode* head = new ListNode(n);
+	ListNode* pHead = head;
+	while (n > 0)
+	{
+		n--;
+		head->next = new ListNode(n);
+		head = head->next;
+	}
+	
+	/*while (pHead != NULL)
+	{
+		cout << pHead->data << " ";
+		pHead = pHead->next;
+	}*/
+	ListNode* p =ReverseList(pHead);
+	while (p != NULL)
+	{
+		cout << p->data << " ";
+		p = p->next;
+	}
+	/*ListNode* head = NULL;
+	AddToTail(head , 10);
+	if (head != NULL)
+	{
+		cout << head->data << endl;
+	}
+	else
+	{
+		cout << "head is nULL" << endl;
+	}
+*/
+	
+	system("pause");
+
+}
